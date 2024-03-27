@@ -7,6 +7,5 @@ import './style.css'
 import PrimeVue from 'primevue/config';
 import 'primevue/resources/themes/aura-light-green/theme.css'
 
-
 createApp(App).mount('#app');
 app.use(PrimeVue);
