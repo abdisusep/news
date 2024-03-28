@@ -3,7 +3,7 @@ import { defineStore } from 'pinia';
 export const useNewsStore = defineStore({
   id: 'news',
   state: () => ({
-    searchValue: 'a',
+    searchValue: 'default',
   }),
   actions: {
     setSearch(value) {

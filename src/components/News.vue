@@ -19,13 +19,13 @@
 				<div class="card rounded border-0" v-else>
 					<div v-for="item in news.slice(0,1)" :key="item.id">
 						<a :href="item.url" target="_blank" class="text-decoration-none text-dark">
-							<img :src="item.urlToImage" class="card-img-top rounded" :alt="item.title">
+							<img :src="item.urlToImage ? item.urlToImage : noImage" class="card-img-top rounded" :alt="item.title">
 						</a>
 						<div class="card-body px-0 py-0">
 						    <h5 class="card-title my-1">
 						    	<a :href="item.url" target="_blank" class="text-decoration-none text-dark">{{ item.title }}</a>
 						    </h5>
-						    <p class="card-text">{{ item.content }}</p>
+						    <p class="card-text">{{ item.content.substring(0, 200) }}</p>
 						</div>
 					</div>
 				</div>
@@ -35,7 +35,7 @@
 					<div class="col-sm-6 mb-2" v-for="item in news.slice(1,5)" :key="item.id" v-if="!isLoading">
 						<div class="card rounded border-0">
 						  <a :href="item.url" target="_blank" class="text-decoration-none text-dark">
-							<img :src="item.urlToImage" class="card-img-top rounded" :alt="item.title">
+							<img :src="item.urlToImage ? item.urlToImage : noImage" class="card-img-top rounded" :alt="item.title">
 						  </a>
 						  <div class="card-body px-0 py-0">
 						    <h5 class="card-title my-1">
@@ -88,7 +88,7 @@
 					<div class="col-sm-6 mb-2" v-for="item in news.slice(5,9)" :key="item.id" v-if="!isLoading">
 						<div class="card rounded border-0">
 						  <a :href="item.url" target="_blank" class="text-decoration-none text-dark">
-							<img :src="item.urlToImage" class="card-img-top rounded" :alt="item.title">
+							<img :src="item.urlToImage ? item.urlToImage : noImage" class="card-img-top rounded" :alt="item.title">
 						  </a>
 						  <div class="card-body px-0 py-0">
 						    <h5 class="card-title my-1">
@@ -118,7 +118,7 @@
 						    <h5 class="card-title my-1">
 						    	<a :href="item.url" target="_blank" class="text-decoration-none text-dark">{{ item.title }}</a>
 						    </h5>
-						    <p class="card-text">{{ item.content }}</p>
+						    <p class="card-text">{{ item.content.substring(0, 200) }}</p>
 						</div>
 					</div>
 				</div>
@@ -138,6 +138,8 @@ const news   = ref([]);
 const searchStore = useNewsStore();
 const search = searchStore.searchValue;
 
+const noImage = 'https://ideas.or.id/wp-content/themes/consultix/images/no-image-found-360x250.png';
+
 const toggleLoading = () => {
   isLoading.value = !isLoading.value;
 };
@@ -149,7 +151,7 @@ watch(() => searchStore.searchValue, (newValue, oldValue) => {
 const fetchData = async (search) => {
   isLoading.value = true;
   try {
-    const response = await fetch(`https://newsapi.org/v2/everything?q=${search}&sortBy=publishedAt&apiKey=85566eec300147198b64c308c349cac1`);
+    const response = await fetch(`https://newsapi.org/v2/everything?q=${search ? search : 'default'}&sortBy=publishedAt&apiKey=85566eec300147198b64c308c349cac1`);
 
     const data = await response.json();
     news.value = data.articles;
