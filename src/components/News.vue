@@ -152,9 +152,6 @@ const fetchData = async (search) => {
   isLoading.value = true;
   try {
     const response = await fetch(`https://newsapi.org/v2/everything?q=${search}&sortBy=publishedAt&apiKey=85566eec300147198b64c308c349cac1`);
-    if (!response.ok) {
-      throw new Error('Failed to fetch data');
-    }
 
     const data = await response.json();
     news.value = data.articles;
