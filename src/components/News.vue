@@ -133,9 +133,7 @@ import { ref, watch, onMounted } from 'vue';
 import { useNewsStore } from '../store/news';
 import Skeleton from 'primevue/skeleton';
 
-
 const isLoading = ref(true);
-
 const news   = ref([]);
 const searchStore = useNewsStore();
 const search = searchStore.searchValue;
